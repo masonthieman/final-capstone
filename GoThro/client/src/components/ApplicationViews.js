@@ -21,7 +21,7 @@ export default function ApplicationViews({ isLoggedIn, isAdmin }) {
           
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
-          <Route path="courses" element={<CourseList /> } /> 
+          <Route path="course" element={<CourseList /> } /> 
         
         </Route>
       </Routes>
