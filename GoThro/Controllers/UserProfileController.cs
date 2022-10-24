@@ -44,8 +44,8 @@ namespace Tabloid.Controllers
         [HttpPost]
         public IActionResult Post(UserProfile userProfile)
         {
-            
-            userProfile.UserType.Id = 1;
+            userProfile.UserType = new UserType();       
+            userProfile.UserType.Id = 2;
             _userProfileRepository.Add(userProfile);
             return CreatedAtAction(
                 nameof(GetUserProfile),

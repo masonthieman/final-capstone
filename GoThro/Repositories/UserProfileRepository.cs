@@ -15,12 +15,12 @@ namespace GoThro.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT up.Id, Up.FirebaseUserId, up.Name, 
+                        SELECT up.Id, up.FirebaseUserId, up.Name, 
                                up.Email,up.UserTypeId,
                                ut.Name AS UserTypeName
                           FROM UserProfile up
                                LEFT JOIN UserType ut on up.UserTypeId = ut.Id
-                         WHERE up.FirebaseUserId = @FirebaseuserId";
+                         WHERE up.FirebaseUserId LIKE @FirebaseUserId";
 
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", firebaseUserId);
 
@@ -38,7 +38,7 @@ namespace GoThro.Repositories
                             UserType = new UserType()
                             {
                                 Id = DbUtils.GetInt(reader, "UserTypeId"),
-                                Name = DbUtils.GetString(reader, "UserTypeName"),
+                                Name = DbUtils.GetString(reader, "UserTypeName")
                             }
                         };
                     }
@@ -63,7 +63,7 @@ namespace GoThro.Repositories
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", userProfile.FirebaseUserId);
                     DbUtils.AddParameter(cmd, "@Name", userProfile.Name);
                     DbUtils.AddParameter(cmd, "@Email", userProfile.Email);
-                    DbUtils.AddParameter(cmd, "@UserTypeId", userProfile.UserType.Id);
+                    DbUtils.AddParameter(cmd, "@UserTypeId", 2);
 
                     userProfile.Id = (int)cmd.ExecuteScalar();
                 }
