@@ -5,7 +5,7 @@ using System;
 using System.Security.Claims;
 
 
-namespace Tabloid.Controllers
+namespace GoThro.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
