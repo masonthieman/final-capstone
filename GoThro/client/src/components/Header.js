@@ -18,7 +18,7 @@ export default function Header({ isLoggedIn, isAdmin }) {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand tag={RRNavLink} to="/">Tabloid</NavbarBrand>
+        <NavbarBrand tag={RRNavLink} to="/">GoThro</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
@@ -28,6 +28,11 @@ export default function Header({ isLoggedIn, isAdmin }) {
               <NavItem>
                 <NavLink tag={RRNavLink} to="/">
                   Home
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={RRNavLink} to="/courses">
+                Courses
                 </NavLink>
               </NavItem>
               

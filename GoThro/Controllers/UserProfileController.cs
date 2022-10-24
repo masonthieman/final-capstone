@@ -45,7 +45,7 @@ namespace Tabloid.Controllers
         public IActionResult Post(UserProfile userProfile)
         {
             
-            userProfile.UserType.Id = UserType.AUTHOR_ID;
+            userProfile.UserType.Id = 1;
             _userProfileRepository.Add(userProfile);
             return CreatedAtAction(
                 nameof(GetUserProfile),
