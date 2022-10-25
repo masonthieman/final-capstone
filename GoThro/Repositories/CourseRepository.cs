@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using GoThro.Models;
 using GoThro.Utils;
+using Microsoft.Extensions.Hosting;
+using System;
+
 namespace GoThro.Repositories
 {
     public class CourseRepository : BaseRepository, ICourseRepository
@@ -64,6 +67,32 @@ namespace GoThro.Repositories
                         
                     
                 }
+            }
+        }
+        public void Add(Course course)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO Course (Name, Address, Holes, ImageLocation, 
+                                        City, StateId, ZipCode, IsApproved, UserProfileId)
+                                         OUTPUT INSERTED.ID
+                                         VALUES (@Name, @Address, @Holes, @ImageLocation, @City, @StateId, @ZipCode,  @IsApproved, @UserProfileId)";
+                    DbUtils.AddParameter(cmd, "@Name", course.Name);
+                    DbUtils.AddParameter(cmd, "@Address", course.Address);
+                    DbUtils.AddParameter(cmd, "@City", course.City);
+                    DbUtils.AddParameter(cmd, "@StateId", course.State.Id);
+                    DbUtils.AddParameter(cmd, "@ZipCode", course.Zip);
+                    DbUtils.AddParameter(cmd, "@Holes", course.Holes);
+                    DbUtils.AddParameter(cmd, "@ImageLocation", course.ImageLocation == null ? DBNull.Value : course.ImageLocation);
+                    DbUtils.AddParameter(cmd, "@IsApproved", course.IsApproved);
+                    DbUtils.AddParameter(cmd, "@UserProfileId", course.UserProfile.Id);
+
+                    course.Id = (int)cmd.ExecuteScalar();
+                }
+
             }
         }
     }

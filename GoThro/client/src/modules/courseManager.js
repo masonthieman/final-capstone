@@ -21,3 +21,24 @@ export const getAllCourses = () => {
       })
     })
 }
+
+export const addCourse = (course) => {
+    return getToken().then((token) => {
+      return fetch(baseUrl, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(course),
+      }).then((resp) => {
+       if (resp.status === 401) {
+          throw new Error("Unauthorized");
+        } else if (!resp.ok) {
+          throw new Error(
+            "An unknown error occurred while trying to save a new course.",
+          );
+        }
+      });
+    });
+  };
