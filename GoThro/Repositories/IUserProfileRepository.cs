@@ -1,4 +1,5 @@
 ﻿using GoThro.Models;
+using System.Collections.Generic;
 
 namespace GoThro.Repositories
 {
@@ -6,5 +7,6 @@ namespace GoThro.Repositories
     {
         UserProfile GetByFirebaseUserId(string firebaseUserId);
         void Add(UserProfile userProfile);
+        List<UserProfile> GetAllUsers();
     }
 }

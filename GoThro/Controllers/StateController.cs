@@ -7,6 +7,8 @@ using System.Security.Claims;
 
 namespace GoThro.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class StateController : ControllerBase
     {
         private readonly IStateRepository _stateRepository;

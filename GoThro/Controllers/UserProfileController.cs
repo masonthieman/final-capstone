@@ -23,12 +23,12 @@ namespace GoThro.Controllers
             return Ok(_userProfileRepository.GetByFirebaseUserId(firebaseUserId));
         }
 
-        [HttpGet("IsUserAdmin")]
-        public IActionResult IsUserAdmin()
+        [HttpGet("CurrentUserProfile")]
+        public IActionResult GetCurrentUser()
         {
             var userProfile = GetCurrentUserProfile();
 
-            return userProfile.UserType.Id == 1 ? Ok(true) : Ok(false);
+            return Ok(userProfile);
         }
         [HttpGet("DoesUserExist/{firebaseUserId}")]
         public IActionResult DoesUserExist(string firebaseUserId)
@@ -53,12 +53,12 @@ namespace GoThro.Controllers
                 userProfile);
         }
 
- /*       [HttpGet]
+        [HttpGet]
         public IActionResult Get()
         {
             return Ok(_userProfileRepository.GetAllUsers());
         }
- */
+ 
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;

@@ -20,7 +20,7 @@ namespace GoThro.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"SELECT c.Id, c.Name, c.Holes, c.Address, IsApproved,ZipCode,City,ImageLocation,
-                    up.Id AS UserId,up.Name AS UserName, Email,
+                    up.Id AS UserId,up.Name AS UserName, Email,up.FirebaseUserId, UserTypeId,
                     s.Name As StateName, s.Abbreviation, s.Id AS StateId
                     FROM Course c LEFT JOIN UserProfile up
                     ON c.UserId = up.Id
@@ -55,6 +55,11 @@ namespace GoThro.Repositories
                                 course.UserProfile.Id = DbUtils.GetInt(reader, "UserId");
                                 course.UserProfile.Name = DbUtils.GetString(reader, "UserName");
                                 course.UserProfile.Email = DbUtils.GetString(reader, "Email");
+                                course.UserProfile.FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId");
+                                course.UserProfile.UserType = new UserType()
+                                {
+                                    Id = DbUtils.GetInt(reader, "UserTypeId")
+                                };
                             };
 
                             courses.Add(course);

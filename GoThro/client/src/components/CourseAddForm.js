@@ -10,7 +10,7 @@ const CourseAddForm = () => {
     address: "",
     zip: "",
     city: "",
-    stateId: 0,
+    stateId: 62,
     holes: 0,
     imageLocation: "",
    // isApproved: true,
@@ -33,7 +33,7 @@ const CourseAddForm = () => {
     evt.preventDefault();
 
     addCourse(course).then((p) => {
-      navigate("/");
+      navigate("/course");
     });
   };
 
@@ -62,6 +62,14 @@ const CourseAddForm = () => {
           id="city"
           type="text"
           //value={course.title}
+          onChange={handleInputChange}/>
+      </FormGroup>
+      <FormGroup>
+        <Label for="zip">Zipcode</Label>
+        <Input
+          id="zip"
+          type="text"
+          //value={course.content}
           onChange={handleInputChange}/>
       </FormGroup>
       <FormGroup>
