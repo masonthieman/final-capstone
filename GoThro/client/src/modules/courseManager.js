@@ -85,3 +85,25 @@ export const addCourse = (course) => {
     })
   })
   }
+  export const deleteCourse = (id) => {
+    return getToken().then((token) => {
+      return fetch(baseUrl + `/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(id),
+      }).then((resp) => {
+        if (resp.ok) {
+          return
+        } else if (resp.status === 401) {
+          throw new Error("Unauthorized");
+        } else {
+          throw new Error(
+            "An unknown error occurred while trying to save a new course.",
+          );
+        }
+      });
+    });
+  };
