@@ -1,7 +1,8 @@
 import React from "react";
-import { Card, CardBody } from "reactstrap";
-
-const Course = ({course}) => {
+import { Button,Card, CardBody, CardFooter } from "reactstrap";
+import { useNavigate } from "react-router-dom"
+const Course = ({course, user}) => {
+  const navigate = useNavigate();
     return (
         <Card >
           <strong className="text-left px-2">{course.name}</strong>
@@ -14,6 +15,19 @@ const Course = ({course}) => {
                 <img src={course.imageLocation} />
             </p>
           </CardBody>
+          <>
+            {
+              user.id === course?.userProfile?.id ? 
+              
+                <Button className="btn btn-primary" onClick={() => {navigate(`/course/edit/${course.id}`)}}>
+                  Edit
+                </Button>
+              
+              :
+                ""
+            }
+          </>
+
         </Card>
       );
 };

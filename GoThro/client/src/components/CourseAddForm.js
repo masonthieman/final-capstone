@@ -11,7 +11,7 @@ const CourseAddForm = () => {
     address: "",
     zip: "",
     city: "",
-   // stateId: 0,
+    stateId: 1,
     holes: 0,
     imageLocation: "",
     isApproved: true,
