@@ -29,6 +29,12 @@ namespace GoThro.Controllers
         {
             return Ok(_courseRepository.GetAll());
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            return Ok(_courseRepository.GetById(id));
+        }
         [HttpPost]
         public IActionResult Post(Course course)
         {
@@ -47,6 +53,17 @@ namespace GoThro.Controllers
             return NoContent();
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Course course)
+        {
+            if (id != course.Id)
+            {
+                return BadRequest();
+            }
+
+            _courseRepository.UpdateCourse(course);
+            return NoContent();
+        }
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;

@@ -5,6 +5,7 @@ import Register from "./Register";
 import Hello from "./Hello";
 import CourseList from "./CourseList"
 import CourseAddForm from "./CourseAddForm";
+import { CourseEdit}  from "./CourseEdit";
 
 export default function ApplicationViews({ isLoggedIn, user}) {
 
@@ -24,7 +25,7 @@ export default function ApplicationViews({ isLoggedIn, user}) {
           <Route path="register" element={<Register />} />
           <Route path="course" element={<CourseList user={user}/> } />
           <Route path="course/add" element={<CourseAddForm user={user}/> } /> 
-
+          <Route path="course/edit/:courseId" element={<CourseEdit/> } />
         </Route>
       </Routes>
     </main>

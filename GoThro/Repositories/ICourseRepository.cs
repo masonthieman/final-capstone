@@ -6,5 +6,7 @@ namespace GoThro.Repositories
     {
         List<Course> GetAll();
         void Add(Course course);
+        void UpdateCourse(Course course);
+        Course GetById(int id);
     }
 }

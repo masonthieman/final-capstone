@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap"
 import Course  from "./Course"
 import {getAllCourses} from "../modules/courseManager";
+import { getCurrentUserProfile } from "../modules/authManager";
 import { getAllStates } from "../modules/stateManager"
 export default function CourseList() {
     const [courses, setCourses] = useState([]);
+    const [user, setUser] = useState(null)
     const navigate = useNavigate();
     const [states, setStates] = useState([])
 
@@ -13,6 +15,9 @@ export default function CourseList() {
         getAllCourses().then(courses => setCourses(courses));
     };
 
+    const getUser = () => {
+      getCurrentUserProfile().then(setUser)
+    }
     const getStates = () => {
         getAllStates().then(states => setStates(states));
     }
@@ -21,8 +26,11 @@ export default function CourseList() {
         navigate("/course/add")
       }
       useEffect(() => {
-        getCourses();
+        getUser();
         getStates();
+        getCourses();
+        
+        
       }, []);
     return (
         <>
@@ -30,7 +38,7 @@ export default function CourseList() {
     <div className="container">
       <div className="row justify-content-center">
         {courses.map((course) => (
-          <Course course={course} key={course.id} />
+          <Course course={course} key={course.id} user={user} />
         ))}
       </div>
     </div>
