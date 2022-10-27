@@ -8,5 +8,6 @@ namespace GoThro.Repositories
         void Add(Course course);
         void UpdateCourse(Course course);
         Course GetById(int id);
+        void DeleteCourse(int id);
     }
 }

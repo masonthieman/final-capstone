@@ -64,6 +64,12 @@ namespace GoThro.Controllers
             _courseRepository.UpdateCourse(course);
             return NoContent();
         }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _courseRepository.DeleteCourse(id);
+            return NoContent();
+        }
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
