@@ -6,7 +6,8 @@ const Course = ({course}) => {
         <Card >
           <strong className="text-left px-2">{course.name}</strong>
           <CardBody>
-            <p>Posted by: {course.userProfile.name}</p>
+            
+            <p>{course?.userProfile?.name ? `Posted by: ${course.userProfile.name} ` : "" }</p>
             <p>Location: {course.city}, {course.state.abbreviation}</p>
             <p>Number of Holes: {course.holes}</p>
             <p>

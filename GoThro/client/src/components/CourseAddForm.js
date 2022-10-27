@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { getCurrentUserProfile } from "../modules/authManager";
 import { addCourse } from "../modules/courseManager";
-
+import { getAllStates } from "../modules/stateManager";
 const CourseAddForm = () => {
   const navigate = useNavigate();
   const emptyCourse = {
@@ -10,14 +11,29 @@ const CourseAddForm = () => {
     address: "",
     zip: "",
     city: "",
-    stateId: 62,
+   // stateId: 0,
     holes: 0,
     imageLocation: "",
-   // isApproved: true,
-    //userProfileId: 0
+    isApproved: true,
+   // userProfileId: 0
   }
-  
+  const [states, setStates] = useState([])
+  const [user, setUser] = useState(null)
+
+
+  useEffect(() => {
+    getStates();
+    getUser();
+  }, []);
+
   const [course, setCourse] = useState(emptyCourse);
+
+  const getStates = () => {
+    getAllStates().then(states => setStates(states));
+}
+  const getUser = () => {
+    getCurrentUserProfile().then(setUser)
+  }
 
   const handleInputChange = (evt) => {
     const value = evt.target.value;
@@ -31,7 +47,11 @@ const CourseAddForm = () => {
 
   const handleSave = (evt) => {
     evt.preventDefault();
-
+    const userCopy = {...user};
+    const courseCopy = {...course}
+    courseCopy.userProfileId = userCopy.id
+    
+    setCourse(courseCopy)
     addCourse(course).then((p) => {
       navigate("/course");
     });
@@ -73,6 +93,20 @@ const CourseAddForm = () => {
           onChange={handleInputChange}/>
       </FormGroup>
       <FormGroup>
+        <Dropdown
+        id="stateId" 
+        label="State"
+        options={states}
+        value={course.stateId}
+        onChange={
+                  (changeEvt) => {
+                    const copy = {...course}
+                    copy.stateId = parseInt(changeEvt.target.value)
+                    setCourse(copy)
+                  }
+        } />
+      </FormGroup>
+      <FormGroup>
         <Label for="holes">Number of Holes</Label>
         <Input
           id="holes"
@@ -97,5 +131,16 @@ const CourseAddForm = () => {
     </Form>
   );
 }
-
+ const Dropdown = ({label,options, onChange}) => {
+     return (
+         <label>
+             {label}
+             <select onChange={(event) => {onChange(event)}}>
+                {options.map((option) => {
+                     return <option key={option.id} value={option.id}>{option.abbreviation}</option>
+                 })}
+             </select>
+         </label>
+     )
+ } 
 export default CourseAddForm;

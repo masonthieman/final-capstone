@@ -3,7 +3,7 @@ import { getToken } from "./authManager";
 
 const apiUrl = "/api/state";
 
-export const getAllUsers = () => {
+export const getAllStates = () => {
     return getToken().then((token) => {
         return fetch(apiUrl, {
             method: "GET",

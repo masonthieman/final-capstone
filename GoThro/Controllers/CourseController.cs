@@ -1,5 +1,6 @@
 ﻿using GoThro.Models;
 using GoThro.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -7,16 +8,20 @@ using System.Security.Claims;
 
 namespace GoThro.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     
     public class CourseController : ControllerBase
     {
         private readonly ICourseRepository _courseRepository;
-
-        public CourseController(ICourseRepository courseRepository)
+        private readonly IUserProfileRepository _userProfileRepository;
+        public CourseController(
+            ICourseRepository courseRepository,
+            IUserProfileRepository userProfileRepository)
         {
             _courseRepository = courseRepository;
+            _userProfileRepository = userProfileRepository;
         }
 
         [HttpGet]
@@ -27,7 +32,7 @@ namespace GoThro.Controllers
         [HttpPost]
         public IActionResult Post(Course course)
         {
-           // course.UserId = 1;
+            course.UserId = GetCurrentUserProfile().Id;
 
             
 
@@ -41,6 +46,11 @@ namespace GoThro.Controllers
 
             return NoContent();
         }
-       
+
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
+        }
     }
 }

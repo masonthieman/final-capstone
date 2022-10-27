@@ -42,6 +42,7 @@ namespace GoThro.Repositories
                                 Zip = DbUtils.GetString(reader, "ZipCode"),
                                 City = DbUtils.GetString(reader, "City"),
                                 ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                                StateId = DbUtils.GetInt(reader, "StateId"),
                                 State = new State()
                                 {
                                     Id = DbUtils.GetInt(reader, "StateId"),
@@ -49,16 +50,18 @@ namespace GoThro.Repositories
                                     Abbreviation = DbUtils.GetString(reader, "Abbreviation")
                                 }
                             };
-                            course.UserProfile = new UserProfile();
+                            course.UserProfile = null;
                             if (!reader.IsDBNull(reader.GetOrdinal("UserId")))
                             {
-                                course.UserProfile.Id = DbUtils.GetInt(reader, "UserId");
-                                course.UserProfile.Name = DbUtils.GetString(reader, "UserName");
-                                course.UserProfile.Email = DbUtils.GetString(reader, "Email");
-                                course.UserProfile.FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId");
-                                course.UserProfile.UserType = new UserType()
-                                {
-                                    Id = DbUtils.GetInt(reader, "UserTypeId")
+                                course.UserProfile = new UserProfile() { 
+                                    Id = DbUtils.GetInt(reader, "UserId"),
+                                    Name = DbUtils.GetString(reader, "UserName"),
+                                    Email = DbUtils.GetString(reader, "Email"),
+                                    FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
+                                    UserType = new UserType()
+                                    {
+                                        Id = DbUtils.GetInt(reader, "UserTypeId")
+                                    }
                                 };
                             };
 
@@ -82,18 +85,18 @@ namespace GoThro.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"INSERT INTO Course (Name, Address, Holes, ImageLocation, 
-                                        City, StateId, ZipCode, IsApproved, UserProfileId)
+                                        City, StateId, ZipCode, IsApproved, UserId)
                                          OUTPUT INSERTED.ID
                                          VALUES (@Name, @Address, @Holes, @ImageLocation, @City, @StateId, @ZipCode,  @IsApproved, @UserProfileId)";
                     DbUtils.AddParameter(cmd, "@Name", course.Name);
                     DbUtils.AddParameter(cmd, "@Address", course.Address);
                     DbUtils.AddParameter(cmd, "@City", course.City);
-                    DbUtils.AddParameter(cmd, "@StateId", course.State.Id);
+                    DbUtils.AddParameter(cmd, "@StateId", course.StateId);
                     DbUtils.AddParameter(cmd, "@ZipCode", course.Zip);
                     DbUtils.AddParameter(cmd, "@Holes", course.Holes);
                     DbUtils.AddParameter(cmd, "@ImageLocation", course.ImageLocation == null ? DBNull.Value : course.ImageLocation);
                     DbUtils.AddParameter(cmd, "@IsApproved", course.IsApproved);
-                    DbUtils.AddParameter(cmd, "@UserProfileId", course.UserProfile.Id);
+                    DbUtils.AddParameter(cmd, "@UserProfileId", course.UserId);
 
                     course.Id = (int)cmd.ExecuteScalar();
                 }

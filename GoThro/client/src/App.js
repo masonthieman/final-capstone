@@ -10,7 +10,7 @@ import { getCurrentUserProfile } from "./modules/authManager"
 // import { getUserProfileById } from "./modules/userProfileManager";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
- // const [isAdmin, setIsAdmin] = useState([])
+
    const [user, setUser] = useState(null)
   useEffect(() => {
     onLoginStatusChange(setIsLoggedIn);
