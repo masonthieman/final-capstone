@@ -14,7 +14,9 @@ namespace GoThro.Models
         public string City { get; set; }
         [DataType(DataType.Url)]
         public string? ImageLocation { get; set; }
+        public int? UserId { get; set; }
         public UserProfile? UserProfile { get; set; }
+        public int StateId { get; set; }
         public State State { get; set; }
     }
 }

@@ -10,6 +10,6 @@ namespace GoThro.Models
         public string Name { get; set; }
 
         public static int ADMIN_ID => 1;
-        public static int AUTHOR_ID => 2;
+        public static int PLAYER_ID => 2;
     }
 }

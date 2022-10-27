@@ -2,9 +2,9 @@
 using GoThro.Models;
 namespace GoThro.Repositories
 {
-    public interface ICourseRepository
+    public interface IStateRepository
     {
-        List<Course> GetAll();
-        void Add(Course course);
+        List<State> GetAll();
+        State GetById(int id);
     }
 }

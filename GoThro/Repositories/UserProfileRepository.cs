@@ -69,5 +69,41 @@ namespace GoThro.Repositories
                 }
             }
         }
+        public List<UserProfile> GetAllUsers()
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT up.Id, up.Name, Email, up.FirebaseUserId, up.UserTypeId, ut.Name AS UserTypeName
+                    FROM UserProfile up LEFT JOIN UserType ut
+                    ON up.UserTypeId = ut.Id";
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        List<UserProfile> users = new List<UserProfile>();
+                        while (reader.Read())
+                        {
+                            UserProfile userProfile = new UserProfile()
+                            {
+                                Id = DbUtils.GetInt(reader, "Id"),
+                                FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
+                                Name = DbUtils.GetString(reader, "Name"),
+                                Email = DbUtils.GetString(reader, "Email"),
+                                UserType = new UserType()
+                                {
+                                    Id = DbUtils.GetInt(reader, "UserTypeId"),
+                                    Name = DbUtils.GetString(reader, "UserTypeName")
+                                }
+                            };
+                            users.Add(userProfile);
+                        }
+                        reader.Close();
+                        return users;
+                    }
+                }
+            }
+        }
     }
 }
