@@ -34,6 +34,7 @@ namespace GoThro
             
            
             services.AddTransient<ICourseRepository, CourseRepository>();
+           
             var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
             var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";
             services

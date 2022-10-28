@@ -18,5 +18,6 @@ namespace GoThro.Models
         public UserProfile? UserProfile { get; set; }
         public int StateId { get; set; }
         public State State { get; set; }
+        public bool PlayedByUser { get; set; }
     }
 }

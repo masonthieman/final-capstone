@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 
 namespace GoThro.Controllers
@@ -16,24 +18,35 @@ namespace GoThro.Controllers
     {
         private readonly ICourseRepository _courseRepository;
         private readonly IUserProfileRepository _userProfileRepository;
+
         public CourseController(
             ICourseRepository courseRepository,
             IUserProfileRepository userProfileRepository)
         {
             _courseRepository = courseRepository;
             _userProfileRepository = userProfileRepository;
+            
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_courseRepository.GetAll());
+            int userId = GetCurrentUserProfile().Id;
+            List<Course> courses = _courseRepository.GetAll(userId);
+            return Ok(courses);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult GetByCourseId(int id)
         {
             return Ok(_courseRepository.GetById(id));
+        }
+        [HttpGet("UserPlayedCourses")]
+        public IActionResult GetUserPlayedCourse()
+        {
+            int userId = GetCurrentUserProfile().Id;
+            return Ok(_courseRepository.GetUserPlayedCourses(userId));
+            
         }
         [HttpPost]
         public IActionResult Post(Course course)
@@ -52,6 +65,13 @@ namespace GoThro.Controllers
 
             return NoContent();
         }
+        [HttpPost("played/{id}")]
+        public IActionResult PostPlayedCourse(int courseId)
+        {
+            int userId = GetCurrentUserProfile().Id;
+            _courseRepository.AddPlayedCourse(userId, courseId);
+            return NoContent();
+        }
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, Course course)
@@ -68,6 +88,13 @@ namespace GoThro.Controllers
         public IActionResult Delete(int id)
         {
             _courseRepository.DeleteCourse(id);
+            return NoContent();
+        }
+        [HttpDelete("played/{id}")]
+        public IActionResult DeletePlayedCourseById(int courseId)
+        {
+            int userId = GetCurrentUserProfile().Id;
+            _courseRepository.DeletePlayedCourse(userId, courseId);
             return NoContent();
         }
         private UserProfile GetCurrentUserProfile()
