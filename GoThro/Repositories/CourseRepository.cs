@@ -12,7 +12,7 @@ namespace GoThro.Repositories
     {
         public CourseRepository(IConfiguration configuration) : base(configuration) { }
 
-        public List<Course> GetAll(int userId)
+        public List<Course> GetAll()
         {
             using (var conn = Connection)
             {
@@ -22,15 +22,12 @@ namespace GoThro.Repositories
 
                     cmd.CommandText = @"SELECT c.Id, c.Name, c.Holes, c.Address, IsApproved,ZipCode,City,ImageLocation,
                     up.Id AS UserId,up.Name AS UserName, Email,up.FirebaseUserId, UserTypeId,
-                    s.Name As StateName, s.Abbreviation, s.Id AS StateId, pc.UserId AS PlayedUserId
+                    s.Name As StateName, s.Abbreviation, s.Id AS StateId
                     FROM Course c LEFT JOIN UserProfile up
                     ON c.UserId = up.Id
                     LEFT Join State s
-                    ON c.StateId = s.Id
-                    Left Join PlayedCourse pc
-                    on pc.UserId = c.Id
-                    Where pc.UserId = @UserId OR pc.UserId is NULL ";
-                    DbUtils.AddParameter(cmd, "@UserId", userId);
+                    ON c.StateId = s.Id";
+                    
                     using (var reader = cmd.ExecuteReader())
                     {
                         List<Course> courses = new List<Course>();
@@ -72,15 +69,8 @@ namespace GoThro.Repositories
                             {
                                 course.UserProfile = null;
                             }
-                            if (!reader.IsDBNull(reader.GetOrdinal("PlayedUserId")))
-                            {
-                                course.PlayedByUser = true;
-                            }
-                            else
-                            {
-                                course.PlayedByUser = false;
-                            }
 
+                            course.PlayedByUser = false;
                             courses.Add(course);
 
                         }
@@ -231,71 +221,32 @@ namespace GoThro.Repositories
             }
         }
        
-        public List<Course> GetUserPlayedCourses(int userId)
+        public List<int> GetUserPlayedCourses(int userId)
         {
             using (var conn = Connection)
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT pc.Id AS PlayedCourseId, pc.UserId, pc.CourseId,
-                                        c.Name as CourseName, c.Holes, c.Address, c.ZipCode, City, ImageLocation,
-                                        s.Name AS StateName, s.Abbreviation, s.Id AS StateId
-                                        FROM PlayedCourse pc INNER JOIN Course c
-                                        ON pc.CourseId = c.Id
-                                        INNER JOIN State s
-                                        ON c.StateId = s.Id
-                                        WHERE pc.UserId = @id";
-                    DbUtils.AddParameter(cmd, "@id", $"%{userId}%");
+                    cmd.CommandText = @"SELECT CourseId
+                                        FROM PlayedCourse
+                                        WHERE UserId = @userId";
+                    DbUtils.AddParameter(cmd, "@userId", userId);
                     using (var reader = cmd.ExecuteReader())
                     {
-                        List<Course> courses = new List<Course>();
+                        List<int> playedCourses = new List<int>();
                         while (reader.Read())
                         {
 
-                            Course course = new Course()
-                            {
-                                Id = DbUtils.GetInt(reader, "Id"),
-                                Name = DbUtils.GetString(reader, "Name"),
-                                Holes = DbUtils.GetInt(reader, "Holes"),
-                                Address = DbUtils.GetString(reader, "Address"),
-                                IsApproved = reader.GetBoolean(reader.GetOrdinal("IsApproved")),
-                                Zip = DbUtils.GetString(reader, "ZipCode"),
-                                City = DbUtils.GetString(reader, "City"),
-                                ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
-                                StateId = DbUtils.GetInt(reader, "StateId"),
-                                State = new State()
-                                {
-                                    Id = DbUtils.GetInt(reader, "StateId"),
-                                    Name = DbUtils.GetString(reader, "StateName"),
-                                    Abbreviation = DbUtils.GetString(reader, "Abbreviation")
-                                }
-                            };
-                            if (!reader.IsDBNull(reader.GetOrdinal("UserId")))
-                            {
-                                course.UserProfile = new UserProfile()
-                                {
-                                    Id = DbUtils.GetInt(reader, "UserId"),
-                                    Name = DbUtils.GetString(reader, "UserName"),
-                                    Email = DbUtils.GetString(reader, "Email"),
-                                    FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
-                                    UserType = new UserType()
-                                    {
-                                        Id = DbUtils.GetInt(reader, "UserTypeId")
-                                    }
-                                };
-                            }
-                            else
-                            {
-                                course.UserProfile = null;
-                            }
-                            courses.Add(course);
+                            int CourseId = DbUtils.GetInt(reader, "CourseId");
+                            
+                            playedCourses.Add(CourseId);
                         };
                         reader.Close();
                             
 
 
-                        return courses;
+                        return playedCourses;
                     }
                 }
             }
@@ -311,8 +262,8 @@ namespace GoThro.Repositories
                                         
                                         VALUES (@UserId, @CourseId)";
 
-                    DbUtils.AddParameter(cmd, "@UserId", $"%{userId}%");
-                    DbUtils.AddParameter(cmd, "@CourseId", $"%{courseId}%");
+                    DbUtils.AddParameter(cmd, "@UserId", userId);
+                    DbUtils.AddParameter(cmd, "@CourseId", courseId);
                     cmd.ExecuteNonQuery();
                     
                 }
@@ -328,8 +279,8 @@ namespace GoThro.Repositories
                 {
                     cmd.CommandText = @"DELETE FROM PlayedCourse
                                         WHERE UserId = @UserId";
-                    DbUtils.AddParameter(cmd, "@UserId", $"%{userId}%");
-                    DbUtils.AddParameter(cmd, "@CourseId", $"%{courseId}%");
+                    DbUtils.AddParameter(cmd, "@UserId", userId);
+                    DbUtils.AddParameter(cmd, "@CourseId", courseId);
                     cmd.ExecuteNonQuery();
                 }
             }

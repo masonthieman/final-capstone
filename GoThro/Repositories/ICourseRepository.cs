@@ -4,12 +4,12 @@ namespace GoThro.Repositories
 {
     public interface ICourseRepository
     {
-        List<Course> GetAll(int userId);
+        List<Course> GetAll();
         void Add(Course course);
         void UpdateCourse(Course course);
         Course GetById(int id);
         void DeleteCourse(int id);
-        List<Course> GetUserPlayedCourses(int userId);
+        List<int> GetUserPlayedCourses(int userId);
         void AddPlayedCourse(int userId, int courseId);
         void DeletePlayedCourse(int userId, int courseId);
     }

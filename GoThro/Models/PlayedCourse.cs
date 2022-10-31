@@ -3,7 +3,7 @@
     public class PlayedCourse
     {
         public int Id { get; set; }
-        public UserProfile UserProfile { get; set;  }
-        public Course Course { get; set; }
+        public int UserId { get; set;  }
+        public int CourseId { get; set; }
     }
 }

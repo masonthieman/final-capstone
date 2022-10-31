@@ -22,15 +22,15 @@ export const getAllCourses = () => {
     })
 }
 
-export const addPlayedCourse = (courseId) => {
+export const addPlayedCourse = (course) => {
   return getToken().then((token) => {
-    return fetch(baseUrl + `/played/${courseId}`, {
+    return fetch(baseUrl + `/played/${course.id}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(courseId),
+      body: JSON.stringify(course),
     }).then((resp) => {
      if (resp.status === 401) {
         throw new Error("Unauthorized");

@@ -32,7 +32,20 @@ namespace GoThro.Controllers
         public IActionResult Get()
         {
             int userId = GetCurrentUserProfile().Id;
-            List<Course> courses = _courseRepository.GetAll(userId);
+            List<Course> courses = _courseRepository.GetAll();
+            List<int> playedCourses = _courseRepository.GetUserPlayedCourses(userId);
+            if (playedCourses.Count > 0)
+            {
+                foreach (var course in courses)
+                {
+                    if (playedCourses.Contains(course.Id))
+                    {
+                        course.PlayedByUser = true;
+                    }
+                }
+            }
+            
+            
             return Ok(courses);
         }
 
@@ -66,10 +79,10 @@ namespace GoThro.Controllers
             return NoContent();
         }
         [HttpPost("played/{id}")]
-        public IActionResult PostPlayedCourse(int courseId)
+        public IActionResult PostPlayedCourse(int id,Course course)
         {
             int userId = GetCurrentUserProfile().Id;
-            _courseRepository.AddPlayedCourse(userId, courseId);
+            _courseRepository.AddPlayedCourse(userId, course.Id);
             return NoContent();
         }
 
