@@ -15,7 +15,7 @@ const CourseAddForm = () => {
     holes: 0,
     imageLocation: "",
     isApproved: true,
-   // userProfileId: 0
+   
   }
   const [states, setStates] = useState([])
   const [user, setUser] = useState(null)
@@ -65,7 +65,7 @@ const CourseAddForm = () => {
         <Input
           id="name"
           type="text"
-          //value={course.title}
+          
           onChange={handleInputChange}/>
       </FormGroup>
       <FormGroup>
@@ -73,7 +73,7 @@ const CourseAddForm = () => {
         <Input
           id="address"
           type="text"
-          //value={course.content}
+          
           onChange={handleInputChange}/>
       </FormGroup>
       <FormGroup>
@@ -81,7 +81,7 @@ const CourseAddForm = () => {
         <Input
           id="city"
           type="text"
-          //value={course.title}
+ 
           onChange={handleInputChange}/>
       </FormGroup>
       <FormGroup>
@@ -89,7 +89,7 @@ const CourseAddForm = () => {
         <Input
           id="zip"
           type="text"
-          //value={course.content}
+
           onChange={handleInputChange}/>
       </FormGroup>
       <FormGroup>
@@ -111,7 +111,7 @@ const CourseAddForm = () => {
         <Input
           id="holes"
           type="number"
-          //value={course.categoryId}
+       
           onChange={handleInputChange}/>
       </FormGroup>
       <FormGroup>
@@ -119,7 +119,7 @@ const CourseAddForm = () => {
         <Input
           id="imageLocation"
           type="text"
-          //value={course.imageLocation}
+      
           onChange={handleInputChange}/>
       </FormGroup>
       

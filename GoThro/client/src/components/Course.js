@@ -2,7 +2,8 @@ import React from "react";
 import { Button,Card, CardBody, CardFooter } from "reactstrap";
 import { useNavigate } from "react-router-dom"
 import { deleteCourse, addPlayedCourse, deletePlayedCourse } from "../modules/courseManager";
-const Course = ({course, user}) => {
+
+const Course = ({course, user, getCourses}) => {
   const navigate = useNavigate();
 
 
@@ -11,10 +12,10 @@ const Course = ({course, user}) => {
 }
 
 const deletePlayed = (courseId) => {
-  deletePlayedCourse(courseId)
+  deletePlayedCourse(courseId).then(() => {getCourses()})
 }
   const addToPlayed = (course) => {
-    addPlayedCourse(course)
+    addPlayedCourse(course).then(() => {getCourses()})
   }
     return (
         <Card >
@@ -25,7 +26,7 @@ const deletePlayed = (courseId) => {
             <p>Location: {course.city}, {course.state.abbreviation}</p>
             <p>Number of Holes: {course.holes}</p>
             <p>
-                <img src={course.imageLocation} />
+                <img style={{width: 125, height: 150 }} src={course.imageLocation} />
             </p>
             <>
             {
@@ -41,12 +42,19 @@ const deletePlayed = (courseId) => {
               :
                 ""
             }
-            <Button className="btn btn-primary" onClick={() => {addToPlayed(course)}}>
-              Played
-            </Button>
-            <Button className="btn btn-primary" onClick={() => {deletePlayed(course.id)}}>
-              Remove From Played
-            </Button>
+            {
+              course.playedByUser ?
+            
+              <Button className="btn btn-primary" onClick={() => {deletePlayed(course.id)}}>
+                Remove From Played
+              </Button>
+              :
+              <Button className="btn btn-primary" onClick={() => {addToPlayed(course)}}>
+              Add To Played
+              </Button>
+              
+              
+            }
           </>
           </CardBody>
           
