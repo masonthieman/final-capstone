@@ -38,7 +38,7 @@ export default function CourseList() {
     <div className="container">
       <div className="row justify-content-center">
         {courses.map((course) => (
-          <Course course={course} key={course.id} user={user} />
+          <Course course={course} key={course.id} user={user} getCourses={getCourses} />
         ))}
       </div>
     </div>
