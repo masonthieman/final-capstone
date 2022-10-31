@@ -19,6 +19,7 @@ namespace GoThro.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
+
                     cmd.CommandText = @"SELECT c.Id, c.Name, c.Holes, c.Address, IsApproved,ZipCode,City,ImageLocation,
                     up.Id AS UserId,up.Name AS UserName, Email,up.FirebaseUserId, UserTypeId,
                     s.Name As StateName, s.Abbreviation, s.Id AS StateId
@@ -26,7 +27,7 @@ namespace GoThro.Repositories
                     ON c.UserId = up.Id
                     LEFT Join State s
                     ON c.StateId = s.Id";
-
+                    
                     using (var reader = cmd.ExecuteReader())
                     {
                         List<Course> courses = new List<Course>();
@@ -50,7 +51,7 @@ namespace GoThro.Repositories
                                     Abbreviation = DbUtils.GetString(reader, "Abbreviation")
                                 }
                             };
-                            course.UserProfile = null;
+                            
                             if (!reader.IsDBNull(reader.GetOrdinal("UserId")))
                             {
                                 course.UserProfile = new UserProfile() { 
@@ -63,8 +64,13 @@ namespace GoThro.Repositories
                                         Id = DbUtils.GetInt(reader, "UserTypeId")
                                     }
                                 };
-                            };
+                            }
+                            else
+                            {
+                                course.UserProfile = null;
+                            }
 
+                            course.PlayedByUser = false;
                             courses.Add(course);
 
                         }
@@ -146,8 +152,10 @@ namespace GoThro.Repositories
                     FROM Course c LEFT JOIN UserProfile up
                     ON c.UserId = up.Id
                     LEFT Join State s
-                    ON c.StateId = s.Id";
+                    ON c.StateId = s.Id
+                    WHERE c.Id = @id";
 
+                    cmd.Parameters.AddWithValue("@id", id);
                     using (var reader = cmd.ExecuteReader())
                     {
                         Course course = null;
@@ -208,6 +216,71 @@ namespace GoThro.Repositories
                     cmd.CommandText = @"DELETE FROM Course
                                         WHERE Id = @id";
                     DbUtils.AddParameter(cmd, "@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+       
+        public List<int> GetUserPlayedCourses(int userId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT CourseId
+                                        FROM PlayedCourse
+                                        WHERE UserId = @userId";
+                    DbUtils.AddParameter(cmd, "@userId", userId);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        List<int> playedCourses = new List<int>();
+                        while (reader.Read())
+                        {
+
+                            int CourseId = DbUtils.GetInt(reader, "CourseId");
+                            
+                            playedCourses.Add(CourseId);
+                        };
+                        reader.Close();
+                            
+
+
+                        return playedCourses;
+                    }
+                }
+            }
+        }
+        public void AddPlayedCourse(int userId, int courseId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO PlayedCourse (UserId, CourseId)
+                                        
+                                        VALUES (@UserId, @CourseId)";
+
+                    DbUtils.AddParameter(cmd, "@UserId", userId);
+                    DbUtils.AddParameter(cmd, "@CourseId", courseId);
+                    cmd.ExecuteNonQuery();
+                    
+                }
+            }
+        }
+
+        public void DeletePlayedCourse(int userId, int courseId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM PlayedCourse
+                                        WHERE UserId = @UserId";
+                    DbUtils.AddParameter(cmd, "@UserId", userId);
+                    DbUtils.AddParameter(cmd, "@CourseId", courseId);
                     cmd.ExecuteNonQuery();
                 }
             }

@@ -22,6 +22,27 @@ export const getAllCourses = () => {
     })
 }
 
+export const addPlayedCourse = (course) => {
+  return getToken().then((token) => {
+    return fetch(baseUrl + `/played/${course.id}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(course),
+    }).then((resp) => {
+     if (resp.status === 401) {
+        throw new Error("Unauthorized");
+      } else if (!resp.ok) {
+        throw new Error(
+          "An unknown error occurred while trying to save a played course.",
+        );
+      }
+    });
+  });
+}
+
 export const addCourse = (course) => {
     return getToken().then((token) => {
       return fetch(baseUrl, {
@@ -94,6 +115,29 @@ export const addCourse = (course) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(id),
+      }).then((resp) => {
+        if (resp.ok) {
+          return
+        } else if (resp.status === 401) {
+          throw new Error("Unauthorized");
+        } else {
+          throw new Error(
+            "An unknown error occurred while trying to save a new course.",
+          );
+        }
+      });
+    });
+  };
+
+  export const deletePlayedCourse = (courseId) => {
+    return getToken().then((token) => {
+      return fetch(baseUrl + `/played/${courseId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(courseId),
       }).then((resp) => {
         if (resp.ok) {
           return

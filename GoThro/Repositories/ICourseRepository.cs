@@ -9,5 +9,8 @@ namespace GoThro.Repositories
         void UpdateCourse(Course course);
         Course GetById(int id);
         void DeleteCourse(int id);
+        List<int> GetUserPlayedCourses(int userId);
+        void AddPlayedCourse(int userId, int courseId);
+        void DeletePlayedCourse(int userId, int courseId);
     }
 }
