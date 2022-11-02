@@ -7,7 +7,7 @@ import { getCourseById } from "../modules/courseManager"
 export const CourseEdit = () => {
     const { courseId } = useParams()
     const navigate = useNavigate()
-    const [course, setCourse] = useState({});
+    
     const [states, setStates] = useState([]);
     
     
@@ -43,6 +43,21 @@ export const CourseEdit = () => {
         return navigate("/course")
     }
 
+    const Dropdown = ({label,options, onChange}) => {
+        return (
+            <label>
+                {label}
+                <select value={updatedCourse.stateId} onChange={(event) => {onChange(event)}}>
+                   {options.map((option) => {
+                    return <option key={option.id} value={option.id}>{option.abbreviation}</option>
+
+                        
+                     })}
+                </select>
+            </label>
+        )
+     
+}
     return (
         <>
             <Form>
@@ -76,7 +91,7 @@ export const CourseEdit = () => {
                     id="stateId" 
                     label="State "
                     options={states}
-                    selected={updatedCourse.stateId}
+                    //selected={updatedCourse.stateId}
        
                     
                     onChange={
@@ -127,21 +142,4 @@ export const CourseEdit = () => {
         </>
     )
 }
-    const Dropdown = ({label,options, onChange,selected}) => {
-        return (
-            <label>
-                {label}
-                <select  onChange={(event) => {onChange(event)}}>
-                   {options.map((option) => {
-                    return option.id === selected ?
-                    <option selected key={option.id} value={option.id}>{option.abbreviation}</option>
-                    :
-                    <option key={option.id} value={option.id}>{option.abbreviation}</option>
-
-                        
-                     })}
-                </select>
-            </label>
-        )
-     
-}
+    

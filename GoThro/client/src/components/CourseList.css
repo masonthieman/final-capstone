@@ -1,0 +1,35 @@
+.course-list {
+
+
+    
+    display: flex;
+    
+    justify-content: space-evenly;
+    flex-flow: row wrap;
+}
+
+.course-info {
+    background-color: lightgray;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+
+.course {
+    background-color: lightgray;
+    width : 16rem;
+    
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-around;
+}
+.course-title {
+    background-color: lightgray;
+}
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    
+}
