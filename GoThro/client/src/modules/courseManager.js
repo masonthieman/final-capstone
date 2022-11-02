@@ -74,13 +74,11 @@ export const addCourse = (course) => {
         },
         body: JSON.stringify(course),
       }).then((resp) => {
-        if (resp.ok) {
-          return resp.json();
-        } else if (resp.status === 401) {
+        if (resp.status === 401) {
           throw new Error("Unauthorized");
-        } else {
+        } else if (!resp.ok){
           throw new Error(
-            "An unknown error occurred while trying to save a new course.",
+            "An unknown error occurred while trying to edit a course.",
           );
         }
       });
@@ -122,7 +120,7 @@ export const addCourse = (course) => {
           throw new Error("Unauthorized");
         } else {
           throw new Error(
-            "An unknown error occurred while trying to save a new course.",
+            "An unknown error occurred while trying to delete a course.",
           );
         }
       });
@@ -145,7 +143,7 @@ export const addCourse = (course) => {
           throw new Error("Unauthorized");
         } else {
           throw new Error(
-            "An unknown error occurred while trying to save a new course.",
+            "An unknown error occurred while trying to remove a played course.",
           );
         }
       });
