@@ -12,7 +12,10 @@ export default function CourseList() {
     const [user, setUser] = useState(null)
     const navigate = useNavigate();
     const [states, setStates] = useState([])
-    let count = 0;
+    const [showPlayed, setShowPlayed] = useState(false)
+
+    const toggle = () => setShowPlayed(!showPlayed)
+
     const getCourses = () => {
         getAllCourses().then(courses => setCourses(courses));
     };
@@ -36,22 +39,40 @@ export default function CourseList() {
         
         
       }, []);
+
+      
     
     return (
         <>
       
-      
-      
+      <div style={{display: 'flex',
+                  flexDirection: 'column',
+                  }}>
+      <Button color="success" className='played btn btn-lg' onClick={() => {toggle()} } >
+        
+        {showPlayed ? "All Courses" 
+        : "Show Played"}
+        </Button> 
+      </div>
         <div className="course-list">
+        
           {courses.map((course) => {
-            return (
-              
-             <Course course={course} key={course.id} user={user} getCourses={getCourses} />
-              
-            )
+            if (showPlayed) {
+              return (
+                course.playedByUser ?
+               <Course course={course} key={course.id} user={user} getCourses={getCourses} />
+                :
+                ""
+              )
+            }
+            else {
+             return <Course course={course} key={course.id} user={user} getCourses={getCourses} />
+                
+            }
+            
           })}
           
-      </div>
+        </div>
             
             
             
