@@ -1,0 +1,5 @@
+.authentication {
+    display: flex;
+    justify-content: space-evenly;
+    flex-flow: row wrap;
+}

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import {Card, Button, Form, FormGroup, Label, Input, CardColumns } from 'reactstrap';
 import { useNavigate, Link } from "react-router-dom";
 import { login } from "../modules/authManager";
-
+import "./Form.css";
 export default function Login() {
   const navigate = useNavigate();
 
@@ -17,6 +17,12 @@ export default function Login() {
   };
 
   return (
+    <>
+    <div className="authentication" >
+    <Card
+      style={{width: '18rem',
+      marginTop : '5rem'
+      }}>
     <Form onSubmit={loginSubmit}>
       <fieldset>
         <FormGroup>
@@ -44,5 +50,8 @@ export default function Login() {
         </em>
       </fieldset>
     </Form>
+    </Card>
+    </div>
+    </>
   );
 }

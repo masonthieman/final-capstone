@@ -12,8 +12,7 @@ import {
 import { logout } from '../modules/authManager';
 
 export default function Header({ isLoggedIn, user }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => setIsOpen(!isOpen);
+  
 
   return (
     <div>
@@ -55,16 +54,7 @@ export default function Header({ isLoggedIn, user }) {
 
               </>
             }
-            {!isLoggedIn &&
-              <>
-                <NavItem>
-                  <NavLink tag={RRNavLink} to="/login">Login</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={RRNavLink} to="/register">Register</NavLink>
-                </NavItem>
-              </>
-            }
+            
           </Nav>
         
       </Navbar>
