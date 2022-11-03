@@ -14,7 +14,7 @@ export default function Hello() {
       left: 0,
       right: 0,
       top: "50%",
-      marginTop: "-2.5rem",
+      marginTop: '-8rem',
       textAlign: "center"
     }}>hello</span>
     <button type="button" className='btn btn-primary btn-lg' style={{

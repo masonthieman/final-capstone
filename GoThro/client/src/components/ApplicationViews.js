@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
@@ -8,9 +8,10 @@ import CourseAddForm from "./CourseAddForm";
 import { CourseEdit}  from "./CourseEdit";
 import  Header  from './Header'
 export default function ApplicationViews({ isLoggedIn, user}) {
-
+  const location = useLocation()
   return (
     <main>
+      
       <Routes>
       
         <Route path="/">

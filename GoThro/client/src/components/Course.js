@@ -50,11 +50,11 @@ const deletePlayed = (courseId) => {
             {
               course.playedByUser ?
             
-              <Button className="btn btn-primary btn-sm" onClick={() => {deletePlayed(course.id)}}>
-                Remove From Played
+              <Button color="success" className="btn btn-sm" onClick={() => {deletePlayed(course.id)}}>
+                Played
               </Button>
               :
-              <Button className="btn btn-primary btn-sm" onClick={() => {addToPlayed(course)}}>
+              <Button className="btn  btn-sm" onClick={() => {addToPlayed(course)}}>
               Add To Played
               </Button>
               
@@ -71,7 +71,7 @@ const deletePlayed = (courseId) => {
 
         </Card>
 
-        <Modal color="lightgrey" centered isOpen={modal} toggle={toggle}>
+        <Modal color="lightgrey"  isOpen={modal} toggle={toggle}>
           <ModalHeader className="text-center" color="lightgray" toggle={toggle}>
           <strong className="text-center px-2">{course.name}</strong>
           </ModalHeader>

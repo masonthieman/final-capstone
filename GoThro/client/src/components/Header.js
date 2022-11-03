@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink as RRNavLink } from "react-router-dom";
+import { NavLink as RRNavLink, useLocation } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -12,10 +12,14 @@ import {
 import { logout } from '../modules/authManager';
 
 export default function Header({ isLoggedIn, user }) {
-  
+  const location = useLocation()
 
   return (
-    <div>
+    location.pathname === "/login"
+    || location.pathname === "/register"
+    || location.pathname === "/" ?
+    ""
+    :
       <Navbar color="dark" dark expand="md">
         <NavbarBrand tag={RRNavLink} to="/">GoThro</NavbarBrand>
         
@@ -58,6 +62,6 @@ export default function Header({ isLoggedIn, user }) {
           </Nav>
         
       </Navbar>
-    </div>
+    
   );
 }

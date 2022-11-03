@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import {Card, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { getCurrentUserProfile } from "../modules/authManager";
 import { addCourse } from "../modules/courseManager";
 import { getAllStates } from "../modules/stateManager";
+import "./Form.css"
 const CourseAddForm = () => {
   const navigate = useNavigate();
   const emptyCourse = {
@@ -59,13 +60,17 @@ const CourseAddForm = () => {
 
 
   return (
-    <Form>
+    <div className="form">
+      <Card style={{width: '40%',
+                  backgroundColor: 'lightgrey'}} >
+    <Form style={{marginLeft: '1rem',
+                  marginRight: '1rem'}}>
       <FormGroup>
         <Label for="name">Course Name</Label>
         <Input
           id="name"
           type="text"
-          
+          style={{width: '40%'}}
           onChange={handleInputChange}/>
       </FormGroup>
       <FormGroup>
@@ -73,7 +78,7 @@ const CourseAddForm = () => {
         <Input
           id="address"
           type="text"
-          
+          style={{width: '40%'}}
           onChange={handleInputChange}/>
       </FormGroup>
       <FormGroup>
@@ -81,7 +86,7 @@ const CourseAddForm = () => {
         <Input
           id="city"
           type="text"
- 
+          style={{width: '25%'}}
           onChange={handleInputChange}/>
       </FormGroup>
       <FormGroup>
@@ -89,13 +94,13 @@ const CourseAddForm = () => {
         <Input
           id="zip"
           type="text"
-
+          style={{width: '25%'}}
           onChange={handleInputChange}/>
       </FormGroup>
       <FormGroup>
         <Dropdown
         id="stateId" 
-        label="State"
+        label="State "
         options={states}
         value={course.stateId}
         onChange={
@@ -111,7 +116,7 @@ const CourseAddForm = () => {
         <Input
           id="holes"
           type="number"
-       
+          style={{width: '10%'}}
           onChange={handleInputChange}/>
       </FormGroup>
       <FormGroup>
@@ -129,6 +134,8 @@ const CourseAddForm = () => {
         <Button className="btn btn-primary" onClick={handleSave}>Submit</Button>
      
     </Form>
+    </Card>
+    </div>
   );
 }
  const Dropdown = ({label,options, onChange}) => {

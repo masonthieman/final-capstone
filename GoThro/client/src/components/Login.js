@@ -18,7 +18,7 @@ export default function Login() {
 
   return (
     <>
-    <div className="authentication" >
+    <div className="form" >
     <Card
       style={{width: '18rem',
       marginTop : '5rem'

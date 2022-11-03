@@ -19,14 +19,15 @@ export default function Register() {
     } else {
       const userProfile = {
         name,
-        email
+        email,
+        userType : { id: 2 }
       };
       register(userProfile, password).then(() => navigate("/"));
     }
   };
 
   return (
-    <div className="authentication">
+    <div className="form">
       <Card style={{marginTop: '5rem'}}>
     <Form onSubmit={registerClick}>
       <fieldset>
