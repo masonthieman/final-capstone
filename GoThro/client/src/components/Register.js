@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Card,Button,CardFooter, Form, FormGroup, Label, Input } from 'reactstrap';
 import { useNavigate } from "react-router-dom";
 import { register } from "../modules/authManager";
 
@@ -19,13 +19,16 @@ export default function Register() {
     } else {
       const userProfile = {
         name,
-        email
+        email,
+        userType : { id: 2 }
       };
       register(userProfile, password).then(() => navigate("/"));
     }
   };
 
   return (
+    <div className="form">
+      <Card style={{marginTop: '5rem'}}>
     <Form onSubmit={registerClick}>
       <fieldset>
         
@@ -67,5 +70,7 @@ export default function Register() {
         </FormGroup>
       </fieldset>
     </Form>
+    </Card>
+    </div>
   );
 }

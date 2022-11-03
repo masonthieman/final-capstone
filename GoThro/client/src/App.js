@@ -33,7 +33,9 @@ function App() {
     <>
     
     <Router>
-      <Header isLoggedIn={isLoggedIn} user={user} />
+      { isLoggedIn ?
+    <Header isLoggedIn={isLoggedIn} user={user} /> :
+    "" }
       <ApplicationViews isLoggedIn={isLoggedIn} user={user} />
     </Router>
   </>

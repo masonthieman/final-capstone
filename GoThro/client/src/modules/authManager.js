@@ -46,7 +46,15 @@ export const getCurrentUserProfile = () => {
     headers: {
       Authorization: `Bearer ${token}`
     }
-    })).then(res => res.json())
+    })).then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        throw new Error(
+          "An unknown error occurred....."
+        )
+      }
+  })
 }
 export const login = (email, pw) => {
     return firebase.auth().signInWithEmailAndPassword(email, pw)

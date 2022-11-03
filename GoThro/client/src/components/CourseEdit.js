@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { Button, Input, Label, Form, FormGroup } from "reactstrap"
+import { Card, Button, Input, Label, Form, FormGroup } from "reactstrap"
 import { updateCourse } from "../modules/courseManager"
 import { getAllStates } from "../modules/stateManager"
 import { getCourseById } from "../modules/courseManager"
@@ -59,8 +59,12 @@ export const CourseEdit = () => {
      
 }
     return (
-        <>
-            <Form>
+        <div className="form">
+            <Card style={{width: '40%',
+                        backgroundColor: 'lightgrey'}}
+            >
+            <Form style={{marginLeft: '1rem',
+                  marginRight: '1rem'}}>
             <FormGroup>
                 <Label for="name">Course Name</Label>
                 <Input
@@ -139,7 +143,8 @@ export const CourseEdit = () => {
                         
                 
             </Form>
-        </>
+            </Card>
+        </div>
     )
 }
     

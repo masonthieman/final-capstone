@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink as RRNavLink } from "react-router-dom";
+import { NavLink as RRNavLink, useLocation } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -12,32 +12,38 @@ import {
 import { logout } from '../modules/authManager';
 
 export default function Header({ isLoggedIn, user }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => setIsOpen(!isOpen);
+  const location = useLocation()
 
   return (
-    <div>
-      <Navbar color="transparent" expand="md">
+    location.pathname === "/login"
+    || location.pathname === "/register"
+    || location.pathname === "/" ?
+    ""
+    :
+      <Navbar color="dark" dark expand="md">
         <NavbarBrand tag={RRNavLink} to="/">GoThro</NavbarBrand>
         
           
             { /* When isLoggedIn === true, we will render the Home link */}
             {isLoggedIn &&
-              <>
+            <>
+              <Nav navbar>
               
                
-                <NavLink color="light" tag={RRNavLink} to="/course">
+                <NavLink  tag={RRNavLink} to="/course">
                 Courses
                 </NavLink>
+              </Nav>
               
-              
+              <Nav navbar>
                 <NavLink tag={RRNavLink} to="/course/add">
                   Add Course
                 </NavLink>
-                
+              </Nav>
+            </>  
         
               
-            </>
+            
             }
           
           
@@ -52,19 +58,10 @@ export default function Header({ isLoggedIn, user }) {
 
               </>
             }
-            {!isLoggedIn &&
-              <>
-                <NavItem>
-                  <NavLink tag={RRNavLink} to="/login">Login</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={RRNavLink} to="/register">Register</NavLink>
-                </NavItem>
-              </>
-            }
+            
           </Nav>
         
       </Navbar>
-    </div>
+    
   );
 }

@@ -44,8 +44,8 @@ namespace GoThro.Controllers
         [HttpPost]
         public IActionResult Post(UserProfile userProfile)
         {
-            userProfile.UserType = new UserType();       
-            userProfile.UserType.Id = 2;
+    //        userProfile.UserType = new UserType() { Id = 2 };       
+            
             _userProfileRepository.Add(userProfile);
             return CreatedAtAction(
                 nameof(GetUserProfile),
