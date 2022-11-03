@@ -134,10 +134,10 @@ export const CourseEdit = () => {
 
             
             </FormGroup>
-                <Button onClick={() => { handleEditButtonClick(updatedCourse) }}>
+                <Button color="success" onClick={() => { handleEditButtonClick(updatedCourse) }}>
                     Save
                 </Button>
-                <Button onClick={() => { navigate("/course") }}>
+                <Button color="danger" onClick={() => { navigate("/course") }}>
                     Cancel
                 </Button>
                         

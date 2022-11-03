@@ -21,9 +21,12 @@ export default function Login() {
     <div className="form" >
     <Card
       style={{width: '18rem',
-      marginTop : '5rem'
+      marginTop : '5rem',
+      backgroundColor: 'lightgrey'
       }}>
-    <Form onSubmit={loginSubmit}>
+    <Form style={{marginLeft: '.5rem',
+                  marginRight: '.5rem' }}
+                  onSubmit={loginSubmit}>
       <fieldset>
         <FormGroup>
           <Label for="email">Email</Label>
@@ -43,7 +46,7 @@ export default function Login() {
           />
         </FormGroup>
         <FormGroup>
-          <Button>Login</Button>
+          <Button color="success">Login</Button>
         </FormGroup>
         <em>
           Not registered? <Link to="/register">Register</Link>

@@ -28,7 +28,10 @@ export default function Register() {
 
   return (
     <div className="form">
-      <Card style={{marginTop: '5rem'}}>
+      <Card style={{marginTop: '5rem',
+                    backgroundColor: 'lightgrey',
+                    marginLeft: '.5rem',
+                  marginRight: '.5rem'}}>
     <Form onSubmit={registerClick}>
       <fieldset>
         
@@ -66,7 +69,7 @@ export default function Register() {
           />
         </FormGroup>
         <FormGroup>
-          <Button>Register</Button>
+          <Button color="success">Register</Button>
         </FormGroup>
       </fieldset>
     </Form>

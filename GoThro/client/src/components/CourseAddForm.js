@@ -131,7 +131,7 @@ const CourseAddForm = () => {
       
       
     
-        <Button className="btn btn-primary" onClick={handleSave}>Submit</Button>
+        <Button color="success" className="btn" onClick={handleSave}>Submit</Button>
      
     </Form>
     </Card>
