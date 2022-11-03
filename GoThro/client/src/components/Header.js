@@ -17,27 +17,30 @@ export default function Header({ isLoggedIn, user }) {
 
   return (
     <div>
-      <Navbar color="transparent" expand="md">
+      <Navbar color="dark" dark expand="md">
         <NavbarBrand tag={RRNavLink} to="/">GoThro</NavbarBrand>
         
           
             { /* When isLoggedIn === true, we will render the Home link */}
             {isLoggedIn &&
-              <>
+            <>
+              <Nav navbar>
               
                
-                <NavLink color="light" tag={RRNavLink} to="/course">
+                <NavLink  tag={RRNavLink} to="/course">
                 Courses
                 </NavLink>
+              </Nav>
               
-              
+              <Nav navbar>
                 <NavLink tag={RRNavLink} to="/course/add">
                   Add Course
                 </NavLink>
-                
+              </Nav>
+            </>  
         
               
-            </>
+            
             }
           
           
