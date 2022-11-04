@@ -8,6 +8,7 @@ import { useState } from "react";
 const Course = ({ course, user, getCourses }) => {
   const navigate = useNavigate();
 
+  
   const [modal, setModal] = useState(false)
   const toggle = () => setModal(!modal)
 
@@ -65,8 +66,8 @@ const Course = ({ course, user, getCourses }) => {
             }>Show Details</Button>
         </CardBody>
       </Card>
-      <Modal color="lightgrey" isOpen={modal} toggle={toggle}>
-        <ModalHeader className="text-center" color="lightgray" toggle={toggle}>
+      <Modal style={{backgroundColor : "lightgrey" }}isOpen={modal} toggle={toggle}>
+        <ModalHeader className="text-center"  toggle={toggle}>
           <strong className="text-center px-2">{course.name}</strong>
         </ModalHeader>
         <ModalBody className="text-center">

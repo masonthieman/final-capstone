@@ -13,11 +13,11 @@ const CourseAddForm = () => {
     zip: "",
     city: "",
     stateId: 1,
-    holes: 0,
+    holes: 18,
     imageLocation: "",
     isApproved: true,
   }
-  
+
   const [states, setStates] = useState([])
   const [user, setUser] = useState(null)
 
@@ -74,7 +74,8 @@ const CourseAddForm = () => {
             <Input
               id="name"
               type="text"
-              style={{ width: '40%' }}
+   
+              defaultValue={emptyCourse.name}
               onChange={handleInputChange} />
           </FormGroup>
           <FormGroup>
@@ -82,7 +83,8 @@ const CourseAddForm = () => {
             <Input
               id="address"
               type="text"
-              style={{ width: '40%' }}
+         
+              defaultValue={emptyCourse.address}
               onChange={handleInputChange} />
           </FormGroup>
           <FormGroup>
@@ -90,7 +92,8 @@ const CourseAddForm = () => {
             <Input
               id="city"
               type="text"
-              style={{ width: '25%' }}
+            
+              defaultValue={emptyCourse.city}
               onChange={handleInputChange} />
           </FormGroup>
           <FormGroup>
@@ -98,7 +101,8 @@ const CourseAddForm = () => {
             <Input
               id="zip"
               type="text"
-              style={{ width: '25%' }}
+      
+              defaultValue={emptyCourse.zip}
               onChange={handleInputChange} />
           </FormGroup>
           <FormGroup>
@@ -120,7 +124,7 @@ const CourseAddForm = () => {
             <Input
               id="holes"
               type="number"
-              style={{ width: '10%' }}
+              defaultValue={emptyCourse.holes}
               onChange={handleInputChange} />
           </FormGroup>
           <FormGroup>
@@ -128,6 +132,7 @@ const CourseAddForm = () => {
             <Input
               id="imageLocation"
               type="text"
+              defaultValue={emptyCourse.imageLocation}
               onChange={handleInputChange} />
           </FormGroup>
           <Button color="success" className="btn" onClick={handleSave}>Submit</Button>
