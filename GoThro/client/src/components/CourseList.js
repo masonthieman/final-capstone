@@ -27,16 +27,10 @@ export default function CourseList() {
     getAllStates().then(states => setStates(states));
   }
 
-
-  const handleClick = (e) => {
-    e.preventDefault()
-    navigate("/course/add")
-  }
   useEffect(() => {
     getUser();
     getStates();
     getCourses();
-
 
   }, []);
 
