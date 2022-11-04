@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {Card, Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Card, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { getCurrentUserProfile } from "../modules/authManager";
 import { addCourse } from "../modules/courseManager";
 import { getAllStates } from "../modules/stateManager";
@@ -16,8 +16,8 @@ const CourseAddForm = () => {
     holes: 0,
     imageLocation: "",
     isApproved: true,
-   
   }
+  
   const [states, setStates] = useState([])
   const [user, setUser] = useState(null)
 
@@ -31,7 +31,7 @@ const CourseAddForm = () => {
 
   const getStates = () => {
     getAllStates().then(states => setStates(states));
-}
+  }
   const getUser = () => {
     getCurrentUserProfile().then(setUser)
   }
@@ -48,10 +48,10 @@ const CourseAddForm = () => {
 
   const handleSave = (evt) => {
     evt.preventDefault();
-    const userCopy = {...user};
-    const courseCopy = {...course}
+    const userCopy = { ...user };
+    const courseCopy = { ...course }
     courseCopy.userProfileId = userCopy.id
-    
+
     setCourse(courseCopy)
     addCourse(course).then((p) => {
       navigate("/course");
@@ -61,93 +61,91 @@ const CourseAddForm = () => {
 
   return (
     <div className="form">
-      <Card style={{width: '40%',
-                  backgroundColor: 'lightgrey'}} >
-    <Form style={{marginLeft: '1rem',
-                  marginRight: '1rem'}}>
-      <FormGroup>
-        <Label for="name">Course Name</Label>
-        <Input
-          id="name"
-          type="text"
-          style={{width: '40%'}}
-          onChange={handleInputChange}/>
-      </FormGroup>
-      <FormGroup>
-        <Label for="address">Street Address</Label>
-        <Input
-          id="address"
-          type="text"
-          style={{width: '40%'}}
-          onChange={handleInputChange}/>
-      </FormGroup>
-      <FormGroup>
-        <Label for="city">City</Label>
-        <Input
-          id="city"
-          type="text"
-          style={{width: '25%'}}
-          onChange={handleInputChange}/>
-      </FormGroup>
-      <FormGroup>
-        <Label for="zip">Zipcode</Label>
-        <Input
-          id="zip"
-          type="text"
-          style={{width: '25%'}}
-          onChange={handleInputChange}/>
-      </FormGroup>
-      <FormGroup>
-        <Dropdown
-        id="stateId" 
-        label="State "
-        options={states}
-        value={course.stateId}
-        onChange={
-                  (changeEvt) => {
-                    const copy = {...course}
-                    copy.stateId = parseInt(changeEvt.target.value)
-                    setCourse(copy)
-                  }
-        } />
-      </FormGroup>
-      <FormGroup>
-        <Label for="holes">Number of Holes</Label>
-        <Input
-          id="holes"
-          type="number"
-          style={{width: '10%'}}
-          onChange={handleInputChange}/>
-      </FormGroup>
-      <FormGroup>
-        <Label for="imageLocation">Image Location</Label>
-        <Input
-          id="imageLocation"
-          type="text"
-      
-          onChange={handleInputChange}/>
-      </FormGroup>
-      
-      
-      
-    
-        <Button color="success" className="btn" onClick={handleSave}>Submit</Button>
-     
-    </Form>
-    </Card>
+      <Card style={{
+        width: '40%',
+        backgroundColor: 'lightgrey'
+      }} >
+        <Form style={{
+          marginLeft: '1rem',
+          marginRight: '1rem'
+        }}>
+          <FormGroup>
+            <Label for="name">Course Name</Label>
+            <Input
+              id="name"
+              type="text"
+              style={{ width: '40%' }}
+              onChange={handleInputChange} />
+          </FormGroup>
+          <FormGroup>
+            <Label for="address">Street Address</Label>
+            <Input
+              id="address"
+              type="text"
+              style={{ width: '40%' }}
+              onChange={handleInputChange} />
+          </FormGroup>
+          <FormGroup>
+            <Label for="city">City</Label>
+            <Input
+              id="city"
+              type="text"
+              style={{ width: '25%' }}
+              onChange={handleInputChange} />
+          </FormGroup>
+          <FormGroup>
+            <Label for="zip">Zipcode</Label>
+            <Input
+              id="zip"
+              type="text"
+              style={{ width: '25%' }}
+              onChange={handleInputChange} />
+          </FormGroup>
+          <FormGroup>
+            <Dropdown
+              id="stateId"
+              label="State "
+              options={states}
+              value={course.stateId}
+              onChange={
+                (changeEvt) => {
+                  const copy = { ...course }
+                  copy.stateId = parseInt(changeEvt.target.value)
+                  setCourse(copy)
+                }
+              } />
+          </FormGroup>
+          <FormGroup>
+            <Label for="holes">Number of Holes</Label>
+            <Input
+              id="holes"
+              type="number"
+              style={{ width: '10%' }}
+              onChange={handleInputChange} />
+          </FormGroup>
+          <FormGroup>
+            <Label for="imageLocation">Image Location</Label>
+            <Input
+              id="imageLocation"
+              type="text"
+              onChange={handleInputChange} />
+          </FormGroup>
+          <Button color="success" className="btn" onClick={handleSave}>Submit</Button>
+        </Form>
+      </Card>
     </div>
   );
 }
- const Dropdown = ({label,options, onChange}) => {
-     return (
-         <label>
-             {label}
-             <select onChange={(event) => {onChange(event)}}>
-                {options.map((option) => {
-                     return <option key={option.id} value={option.id}>{option.abbreviation}</option>
-                 })}
-             </select>
-         </label>
-     )
- } 
+const Dropdown = ({ label, options, onChange }) => {
+  return (
+    <label>
+      {label}
+      <select onChange={(event) => { onChange(event) }}>
+        {options.map((option) => {
+          return <option key={option.id} value={option.id}>{option.abbreviation}</option>
+        })}
+      </select>
+    </label>
+  )
+}
 export default CourseAddForm;
